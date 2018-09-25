@@ -42,12 +42,10 @@ class Client
      *
      * @param string|null        $cacheDir
      * @param \GuzzleHttp\Client $httpClient
-     * @param string             $apiVersion
      */
     public function __construct(
         string $cacheDir = null,
-        \GuzzleHttp\Client $httpClient = null,
-        string $apiVersion = null
+        \GuzzleHttp\Client $httpClient = null
     ) {
         $serializerBuilder = SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/Resource/config/serializer');
@@ -56,7 +54,7 @@ class Client
             $serializerBuilder->setCacheDir($cacheDir);
         }
 
-        $this->apiVersion = $apiVersion ?? 'v1';
+        $this->apiVersion = 'v1';
         $this->serializer = $serializerBuilder->build();
 
         if ($httpClient === null) {
