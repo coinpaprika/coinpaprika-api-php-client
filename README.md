@@ -44,7 +44,7 @@ For deserialization process it is advised to initiate the `$client` with `$cache
  require_once __DIR__ . '/vendor/autoload.php';
  
  $client = new \Coinpaprika\Client('my/cache/direcory');
- $coins = $client->getCoins();
+ $coins = $client->getTickers();
  ```
 
 ## License
