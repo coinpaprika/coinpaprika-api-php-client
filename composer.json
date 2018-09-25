@@ -24,8 +24,5 @@
     },
     "autoload": {
         "psr-4": { "Coinpaprika\\": "src/Coinpaprika/" }
-    },
-    "autoload-dev": {
-        "psr-4": { "Coinpaprika\\Tests\\": "test/Coinpaprika/"}
     }
 }
