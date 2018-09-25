@@ -1,7 +1,7 @@
 # Coinpaprika API PHP Client
+[![Logo](https://coinpaprika.com/static/files/d6d3c6e3.svg#greywizard/rock-coin-web/assets/coin/img/cp-logo-beta.svg)](https://api.coinpaprika.com/)
 
 [![Build Status](https://travis-ci.org/coinpaprika/coinpaprika-api-php-client.svg?branch=master)](https://travis-ci.org/coinpaprika/coinpaprika-api-php-client)
-
 
 ## Usage
 
