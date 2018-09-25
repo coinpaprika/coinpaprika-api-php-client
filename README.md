@@ -33,7 +33,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $client = new \Coinpaprika\Client();
 $coins = $client->getCoins();
 ```
-From `$client` object, you can access to all endpoints.
+From `$client` object, you can access all the endpoints.
 
 ## Cache usage
 For deserialization process it is advised to initiate the `$client` with `$cacheDir` 
