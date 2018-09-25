@@ -1,0 +1,6 @@
+.idea/
+vendor/*
+phpunit.xml
+composer.lock
+var/cache
+tests/_reports/*

@@ -1,0 +1,31 @@
+{
+    "name": "coinpaprika/coinpaprika-api-php-client",
+    "description": "coinpaprika.com API v1 client",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["coinpaprika"],
+    "homepage": "https://api.coinpaprika.com/",
+    "authors": [
+        {
+            "name": "Krzysztof Przybyszewski",
+            "email": "kprzybyszewski@greywizard.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1",
+        "jms/serializer": "^1.13.0",
+        "guzzlehttp/guzzle": "^6.3.3",
+        "symfony/yaml": "^4.1.4",
+        "doctrine/cache": "^1.9@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5 || ^6.0"
+    },
+    "autoload": {
+        "psr-4": { "Coinpaprika\\": "src/Coinpaprika/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Coinpaprika\\Tests\\": "test/Coinpaprika/"}
+    }
+}

@@ -1,0 +1,40 @@
+Coinpaprika\Model\Ticker:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    symbol:
+      type: string
+    rank:
+      type: int
+    priceUSD:
+      type: float
+      serialized_name: price_usd
+    priceBTC:
+      type: float
+      serialized_name: price_btc
+    volume24hUSD:
+      type: int
+      serialized_name: volume_24h_usd
+    marketCapUSD:
+      type: int
+      serialized_name: market_cap_usd
+    circulatingSupply:
+      type: int
+    totalSupply:
+      type: int
+    maxSupply:
+      type: int
+    percentChange1h:
+      type: float
+      serialized_name: percent_change_1h
+    percentChange24h:
+      type: float
+      serialized_name: percent_change_24h
+    percentChange7d:
+      type: float
+      serialized_name: percent_change_7d
+    lastUpdated:
+      type: int

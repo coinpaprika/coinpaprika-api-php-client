@@ -1,0 +1,14 @@
+Coinpaprika\Model\GlobalStats:
+  access_type: public_method # defaults to property
+  properties:
+    marketCapUsd:
+      type: int
+    volume24hUSD:
+      type: int
+      serialized_name: volume_24h_usd
+    bitcoinDominancePercentage:
+      type: float
+    cryptocurrenciesNumber:
+      type: int
+    lastUpdated:
+      type: int

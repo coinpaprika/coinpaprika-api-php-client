@@ -1,0 +1,9 @@
+Coinpaprika\Model\Coin:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    symbol:
+      type: string
