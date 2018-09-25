@@ -1,0 +1,25 @@
+language: php
+sudo: false
+
+cache:
+  directories:
+  - vendor
+  - var/cache
+  - $HOME/.composer/cache
+
+env:
+  global:
+  - TEST_COMMAND="vendor/bin/phpunit --verbose --coverage-text"
+
+php:
+- 7.1
+- 7.2
+
+before_install:
+  - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+
+install:
+  - travis_retry composer install --no-interaction
+
+script:
+  - $TEST_COMMAND
