@@ -41,7 +41,7 @@ $coins = $client->getCoins();
 From `$client` object, you can access all the endpoints.
 
 ## Cache usage
-For deserialization process it is advised to initiate the `$client` with `$cacheDir` 
+For deserialization process it is advised to initiate the `$client` with `$cacheDir` argument.
  ```php
  <?php
  
