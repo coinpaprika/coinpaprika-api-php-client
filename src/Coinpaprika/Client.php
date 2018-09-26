@@ -76,7 +76,7 @@ class Client
      */
     public function getGlobalStats(): GlobalStats
     {
-        $response = $this->httpClient->request('GET', $this->getEndpointUrl('global'));
+        $response = $this->sendRequest('GET', $this->getEndpointUrl('global'));
 
         return $this->deserializeResponse($response, GlobalStats::class);
     }
@@ -92,7 +92,7 @@ class Client
      */
     public function getTickers(): array
     {
-        $response = $this->httpClient->request('GET', $this->getEndpointUrl('ticker'));
+        $response = $this->sendRequest('GET', $this->getEndpointUrl('ticker'));
 
         return $this->deserializeResponse($response, sprintf('array<%s>', Ticker::class));
     }
@@ -110,7 +110,7 @@ class Client
      */
     public function getTickerByCoinId(string $id): Ticker
     {
-        $response = $this->httpClient->request(
+        $response = $this->sendRequest(
             'GET',
             $this->getEndpointUrl(sprintf('ticker/%s', $id))
         );
@@ -129,7 +129,7 @@ class Client
      */
     public function getCoins(): array
     {
-        $response = $this->httpClient->request('GET', $this->getEndpointUrl('coins'));
+        $response = $this->sendRequest('GET', $this->getEndpointUrl('coins'));
 
         return $this->deserializeResponse($response, sprintf('array<%s>', Coin::class));
 
@@ -158,6 +158,37 @@ class Client
     }
 
     /**
+     * Get the latest tag from git repository.
+     *
+     * @return string
+     */
+    public function getClientVersion(): string
+    {
+        $version = trim(`git describe --tags --abbrev=0`);
+
+        return $version;
+    }
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @param array  $headers
+     *
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    protected function sendRequest(string $method, string $url, array $headers = []): ResponseInterface
+    {
+        $defaultHeaders = [
+            'User-Agent' => sprintf('Coinpaprika API Client - PHP (%s)', $this->getClientVersion())
+        ];
+
+        return $this->httpClient->request($method, $url, [
+            'headers' => array_merge($defaultHeaders, $headers)
+        ]);
+    }
+
+    /**
      * Unmarshal JSON
      *
      * @param ResponseInterface $response
@@ -168,7 +199,7 @@ class Client
      *
      * @return mixed
      */
-    private function deserializeResponse(ResponseInterface $response, string $type)
+    protected function deserializeResponse(ResponseInterface $response, string $type)
     {
         $body = $response->getBody();
 
