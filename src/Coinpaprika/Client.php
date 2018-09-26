@@ -158,7 +158,7 @@ class Client
     }
 
     /**
-     * Get the latest tag from git repository.
+     * Get the latest tag from a git repository.
      *
      * @return string
      */
