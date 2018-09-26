@@ -77,7 +77,7 @@ class Client
     {
         $response = $this->httpClient->request('GET', $this->getEndpointUrl('global'));
 
-        return $this->deserializeResponse($response,GlobalStats::class);
+        return $this->deserializeResponse($response, GlobalStats::class);
     }
 
     /**
