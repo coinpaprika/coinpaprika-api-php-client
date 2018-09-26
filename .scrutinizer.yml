@@ -17,10 +17,16 @@ checks:
     fix_identation_4spaces: true
     fix_doc_comments: true
 build:
-  tests:
-    override:
-    -
-      command: ./vendor/bin/phpunit --coverage-clover 'tests/_reports/clover.xml' tests/
-      coverage:
-        file: tests/_reports/clover.xml
-        format: clover
+  nodes:
+    analysis:
+      tests:
+        override:
+        - php-scrutinizer-run
+    tests-and-coverage:
+      tests:
+        override:
+        -
+          command: ./vendor/bin/phpunit --coverage-clover 'tests/_reports/clover.xml' tests/
+          coverage:
+            file: tests/_reports/clover.xml
+            format: clover
