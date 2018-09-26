@@ -1,10 +1,12 @@
 # Coinpaprika API PHP Client
 [![Logo](https://coinpaprika.com/static/files/d6d3c6e3.svg#greywizard/rock-coin-web/assets/coin/img/cp-logo-beta.svg)](https://api.coinpaprika.com/)
 
+[![Latest Stable Version](https://poser.pugx.org/coinpaprika/coinpaprika-api-php-client/v/stable)](https://packagist.org/packages/coinpaprika/coinpaprika-api-php-client)
 [![Build Status](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/build-status/master)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Quality Score](https://img.shields.io/scrutinizer/g/coinpaprika/coinpaprika-api-php-client.svg?style=flat-square)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client)
 [![Code Coverage](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/?branch=master)
+[![Total Downloads](https://poser.pugx.org/coinpaprika/coinpaprika-api-php-client/downloads)](https://packagist.org/packages/coinpaprika/coinpaprika-api-php-client)
 
 ## Usage
 
