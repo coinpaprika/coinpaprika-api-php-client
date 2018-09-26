@@ -8,6 +8,7 @@ use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
 use Coinpaprika\Model\Ticker;
 use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\Serializer;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 

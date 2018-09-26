@@ -1,8 +1,10 @@
 # Coinpaprika API PHP Client
 [![Logo](https://coinpaprika.com/static/files/d6d3c6e3.svg#greywizard/rock-coin-web/assets/coin/img/cp-logo-beta.svg)](https://api.coinpaprika.com/)
 
-[![Build Status](https://travis-ci.org/coinpaprika/coinpaprika-api-php-client.svg?branch=master)](https://travis-ci.org/coinpaprika/coinpaprika-api-php-client)
+[![Build Status](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/build-status/master)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/?branch=master)
 
 ## Usage
 
