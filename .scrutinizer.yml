@@ -20,7 +20,7 @@ build:
   tests:
     override:
     -
-      command: 'phpunit --coverage-text --coverage-clover=coverage.clover'
+      command: ./vendor/bin/phpunit --coverage-clover 'tests/_reports/clover.xml' tests/
       coverage:
-        file: 'coverage.clover'
-        format: 'php-clover'
+        file: tests/_reports/clover.xml
+        format: clover
