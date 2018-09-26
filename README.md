@@ -3,7 +3,7 @@
 
 [![Build Status](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/build-status/master)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/?branch=master)
+[![Quality Score](https://img.shields.io/scrutinizer/g/coinpaprika/coinpaprika-api-php-client.svg?style=flat-square)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client)
 [![Code Coverage](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/coinpaprika/coinpaprika-api-php-client/?branch=master)
 
 ## Usage
