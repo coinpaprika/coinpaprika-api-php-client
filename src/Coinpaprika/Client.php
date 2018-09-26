@@ -51,7 +51,7 @@ class Client
         $serializerBuilder = SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/Resource/config/serializer');
 
-        if ($cacheDir) {
+        if ($cacheDir !== null) {
             $serializerBuilder->setCacheDir($cacheDir);
         }
 
