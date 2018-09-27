@@ -1,6 +1,6 @@
 # Coinpaprika API PHP Client
 [![Coins](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/global&label=coins&query=$.cryptocurrencies_number&colorB=lightgrey&maxAge=3600)](https://coinpaprika.com)
-[![Bitcoin Price USD](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/ticker/btc-bitcoin&label=Bitcoin&query=$.price_usd&colorB=red&prefix=$%20&maxAge=3600)](https://coinpaprika.com)
+[![Bitcoin Price USD](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/ticker/btc-bitcoin&label=Bitcoin&query=$.price_usd&colorB=brightgreen&prefix=$%20&maxAge=3600)](https://coinpaprika.com)
 
 [![Logo](https://coinpaprika.com/static/files/d6d3c6e3.svg#greywizard/rock-coin-web/assets/coin/img/cp-logo-beta.svg)](https://api.coinpaprika.com/)
 
