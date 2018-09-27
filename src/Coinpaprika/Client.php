@@ -158,18 +158,6 @@ class Client
     }
 
     /**
-     * Get the latest tag from a git repository.
-     *
-     * @return string
-     */
-    public function getClientVersion(): string
-    {
-        $version = trim(`git describe --tags --abbrev=0`);
-
-        return $version;
-    }
-
-    /**
      * @param string $method
      * @param string $url
      * @param array  $headers
@@ -180,7 +168,7 @@ class Client
     protected function sendRequest(string $method, string $url, array $headers = []): ResponseInterface
     {
         $defaultHeaders = [
-            'User-Agent' => sprintf('Coinpaprika API Client - PHP (%s)', $this->getClientVersion())
+            'User-Agent' => 'Coinpaprika API Client - PHP'
         ];
 
         return $this->httpClient->request($method, $url, [
