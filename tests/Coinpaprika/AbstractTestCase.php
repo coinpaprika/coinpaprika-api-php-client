@@ -8,8 +8,10 @@ use Coinpaprika\Model\Ico;
 use Coinpaprika\Model\Person;
 use Coinpaprika\Model\Tag;
 use Coinpaprika\Model\Ticker;
+use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -243,6 +245,19 @@ abstract class AbstractTestCase extends TestCase
             ->withAnyParameters()
             ->willReturn($responseMock)
         ;
+
+        if ($httpCode >= 400) {
+
+            $exception = new ClientException(
+                sprintf('HTTP code: %s', $httpCode),
+                $this->createMock(RequestInterface::class),
+                $responseMock
+            );
+
+            $httpClientMock
+                ->method('request')
+                ->willThrowException($exception);
+        }
 
         return $httpClientMock;
     }

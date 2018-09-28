@@ -10,6 +10,7 @@ use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
 use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
+use GuzzleHttp\Exception\ClientException;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Serializer;
 use GuzzleHttp\Exception\GuzzleException;
@@ -228,9 +229,15 @@ class Client
             $url = sprintf('%s?%s', $url, $params);
         }
 
-        return $this->httpClient->request($method, $url, [
-            'headers' => array_merge($defaultHeaders, $headers)
-        ]);
+        try {
+
+            return $this->httpClient->request($method, $url, [
+                'headers' => array_merge($defaultHeaders, $headers)
+            ]);
+
+        } catch (ClientException $e) {
+            return $e->getResponse();
+        }
     }
 
     /**
