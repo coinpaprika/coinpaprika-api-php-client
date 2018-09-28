@@ -2,10 +2,13 @@
 
 namespace Coinpaprika;
 
+use Coinpaprika\Exception\InvalidResponseException;
 use Coinpaprika\Exception\RateLimitExceededException;
 use Coinpaprika\Exception\ResponseErrorException;
+use Coinpaprika\Http\Request;
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
+use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Serializer;
@@ -41,8 +44,8 @@ class Client
     /**
      * Client constructor.
      *
-     * @param string|null        $cacheDir
-     * @param \GuzzleHttp\Client $httpClient
+     * @param   string|null         $cacheDir
+     * @param   \GuzzleHttp\Client  $httpClient
      */
     public function __construct(
         string $cacheDir = null,
@@ -68,89 +71,119 @@ class Client
     /**
      * Get global stats
      *
-     * @throws GuzzleException
-     * @throws ResponseErrorException
-     * @throws RateLimitExceededException
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
      *
-     * @return GlobalStats
+     * @return  GlobalStats
      */
     public function getGlobalStats(): GlobalStats
     {
-        $response = $this->sendRequest('GET', $this->getEndpointUrl('global'));
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('global')
+        );
 
-        return $this->deserializeResponse($response, GlobalStats::class);
+        return $this->response($response, GlobalStats::class);
     }
 
     /**
      * Get tickers
      *
-     * @throws GuzzleException
-     * @throws ResponseErrorException
-     * @throws RateLimitExceededException
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
      *
-     * @return array|Ticker[]
+     * @return  array|Ticker[]
      */
     public function getTickers(): array
     {
-        $response = $this->sendRequest('GET', $this->getEndpointUrl('ticker'));
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('ticker')
+        );
 
-        return $this->deserializeResponse($response, sprintf('array<%s>', Ticker::class));
+        return $this->response($response, sprintf('array<%s>', Ticker::class));
     }
 
     /**
      * Get coin`s ticker data
      *
-     * @param string $id
+     * @param   string $id
      *
-     * @throws GuzzleException
-     * @throws ResponseErrorException
-     * @throws RateLimitExceededException
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
      *
-     * @return Ticker
+     * @return  Ticker
      */
     public function getTickerByCoinId(string $id): Ticker
     {
         $response = $this->sendRequest(
-            'GET',
+            Request::METHOD_GET,
             $this->getEndpointUrl(sprintf('ticker/%s', $id))
         );
 
-        return $this->deserializeResponse($response, Ticker::class);
+        return $this->response($response, Ticker::class);
     }
 
     /**
      * Get coins list
      *
-     * @throws GuzzleException
-     * @throws ResponseErrorException
-     * @throws RateLimitExceededException
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
      *
-     * @return array|Coin[]
+     * @return  array|Coin[]
      */
     public function getCoins(): array
     {
-        $response = $this->sendRequest('GET', $this->getEndpointUrl('coins'));
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('coins')
+        );
 
-        return $this->deserializeResponse($response, sprintf('array<%s>', Coin::class));
+        return $this->response($response, sprintf('array<%s>', Coin::class));
 
     }
 
     /**
-     * Get the endpoint URL.
+     * @param   string     $query
+     * @param   array|null $categories
+     * @param   null       $limit
      *
-     * @param string $endpoint
+     * @throws  InvalidResponseException
+     * @throws  RateLimitExceededException
+     * @throws  ResponseErrorException
+     * @throws  GuzzleException
      *
-     * @return string
+     * @return Search
      */
-    protected function getEndpointUrl(string $endpoint): string
+    public function search(string $query, array $categories = null, $limit = null): Search
     {
-        return str_replace('%ver%', $this->getApiVersion(), static::BASE_URL).$endpoint;
+        $params = array_filter([
+            'q' => $query,
+            'c' => $categories ? implode(',', $categories) : null,
+            'limit' => $limit
+        ]);
+
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('global'),
+            $params
+        );
+
+        return $this->response($response, Search::class);
     }
 
     /**
      * Get the API version
      *
-     * @return string
+     * @return  string
      */
     public function getApiVersion(): string
     {
@@ -158,18 +191,40 @@ class Client
     }
 
     /**
-     * @param string $method
-     * @param string $url
-     * @param array  $headers
+     * Get the endpoint URL.
      *
-     * @return ResponseInterface
-     * @throws GuzzleException
+     * @param   string  $endpoint
+     *
+     * @return  string
      */
-    protected function sendRequest(string $method, string $url, array $headers = []): ResponseInterface
+    protected function getEndpointUrl(string $endpoint): string
     {
+        return str_replace('%ver%', $this->getApiVersion(), static::BASE_URL).$endpoint;
+    }
+
+    /**
+     * @param   string $method
+     * @param   string $url
+     * @param   array  $params
+     * @param   array  $headers
+     *
+     * @return  ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function sendRequest(
+        string $method,
+        string $url,
+        array $params = [],
+        array $headers = []
+    ): ResponseInterface {
+
         $defaultHeaders = [
             'User-Agent' => 'Coinpaprika API Client - PHP'
         ];
+
+        if (Request::METHOD_GET === $method) {
+
+        }
 
         return $this->httpClient->request($method, $url, [
             'headers' => array_merge($defaultHeaders, $headers)
@@ -177,29 +232,58 @@ class Client
     }
 
     /**
-     * Unmarshal JSON
+     * @param   ResponseInterface   $response
      *
-     * @param ResponseInterface $response
-     * @param string            $type
-     *
-     * @throws ResponseErrorException
-     * @throws RateLimitExceededException
-     *
-     * @return mixed
+     * @throws  InvalidResponseException
+     * @throws  RateLimitExceededException
+     * @throws  ResponseErrorException
      */
-    protected function deserializeResponse(ResponseInterface $response, string $type)
+    protected function validateResponse(ResponseInterface $response): void
     {
-        $body = $response->getBody();
+        $statusCode = $response->getStatusCode();
 
         // rate limit exceeded
-        if ($response->getStatusCode() === 429) {
+        if ($statusCode === 429) {
             throw new RateLimitExceededException('Response code from API 429. Rate limit exceeded.');
         }
 
-        if (array_key_exists('error', $e = json_decode($body, true))) {
-            throw new ResponseErrorException($e['error']);
-        }
+        // check for errors
+        if ($statusCode >= 400 && $statusCode <= 500) {
 
-        return $this->serializer->deserialize($body, $type, 'json');
+            if (array_key_exists('error', $e = json_decode($response->getBody(), true))) {
+
+                throw new ResponseErrorException(sprintf(
+                    'Response code: %s, error: %s',
+                    $statusCode,
+                    $e['error']
+                ));
+            }
+
+            throw new InvalidResponseException(sprintf(
+                'Bad response from a server - status code: %s, but error field does not exists.',
+                $statusCode
+            ));
+        }
+    }
+
+    /**
+     * Unmarshal JSON
+     *
+     * @param   ResponseInterface $response
+     * @param   string            $type
+     *
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @see     https://api.coinpaprika.com/#section/Errors
+     *
+     * @return  mixed
+     */
+    protected function response(ResponseInterface $response, string $type)
+    {
+        $this->validateResponse($response);
+
+        return $this->serializer->deserialize($response->getBody(), $type, 'json');
     }
 }

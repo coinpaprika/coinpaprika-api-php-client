@@ -1,0 +1,9 @@
+Coinpaprika\Model\Exchange:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    rank:
+      type: int

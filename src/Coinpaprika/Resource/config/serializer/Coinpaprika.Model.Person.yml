@@ -1,0 +1,9 @@
+Coinpaprika\Model\Person:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    teamsCount:
+      type: int

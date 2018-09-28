@@ -2,6 +2,8 @@
 
 namespace Coinpaprika\Model;
 
+use Coinpaprika\Model\Traits\IdentityTrait;
+
 /**
  * Class Ticker
  *
@@ -11,10 +13,7 @@ namespace Coinpaprika\Model;
  */
 class Ticker
 {
-    /**
-     * @var string
-     */
-    private $id;
+    use IdentityTrait;
 
     /**
      * @var string
@@ -85,22 +84,6 @@ class Ticker
      * @var int
      */
     private $lastUpdated;
-
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     */
-    public function setId(string $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string

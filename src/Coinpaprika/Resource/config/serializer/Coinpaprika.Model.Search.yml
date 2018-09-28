@@ -1,0 +1,13 @@
+Coinpaprika\Model\Search:
+  access_type: public_method # defaults to property
+  properties:
+    currencies:
+      type: array<Coinpaprika\Model\Coin>
+    exchanges:
+      type: array<Coinpaprika\Model\Exchange>
+    icos:
+      type: array<Coinpaprika\Model\Ico>
+    people:
+      type: array<Coinpaprika\Model\Person>
+    tags:
+      type: array<Coinpaprika\Model\Tag>

@@ -1,4 +1,4 @@
-Coinpaprika\Model\Coin:
+Coinpaprika\Model\Ico:
   access_type: public_method # defaults to property
   properties:
     id:
@@ -7,11 +7,6 @@ Coinpaprika\Model\Coin:
       type: string
     symbol:
       type: string
-    rank:
-      type: int
     new:
       type: boolean
       serialized_name: is_new
-    active:
-      type: boolean
-      serialized_name: is_active

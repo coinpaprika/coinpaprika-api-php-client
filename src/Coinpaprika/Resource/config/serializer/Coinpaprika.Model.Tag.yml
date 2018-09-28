@@ -1,0 +1,11 @@
+Coinpaprika\Model\Tag:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    coinCounter:
+      type: int
+    icoCounter:
+      type: int
