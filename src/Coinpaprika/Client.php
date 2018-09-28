@@ -152,9 +152,9 @@ class Client
     }
 
     /**
-     * @param   string     $query
-     * @param   array|null $categories
-     * @param   null       $limit
+     * @param   string     $query       Search query string
+     * @param   array|null $categories  When null it defaults to all possible categories
+     * @param   int        $limit       Per category limit
      *
      * @throws  InvalidResponseException
      * @throws  RateLimitExceededException
@@ -163,7 +163,7 @@ class Client
      *
      * @return Search
      */
-    public function search(string $query, array $categories = null, $limit = null): Search
+    public function search(string $query, array $categories = null, int $limit = null): Search
     {
         $params = array_filter([
             'q' => $query,
@@ -173,7 +173,7 @@ class Client
 
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl('global'),
+            $this->getEndpointUrl('search'),
             $params
         );
 
@@ -223,7 +223,9 @@ class Client
         ];
 
         if (Request::METHOD_GET === $method) {
+            $params = http_build_query($params);
 
+            $url = sprintf('%s?%s', $url, $params);
         }
 
         return $this->httpClient->request($method, $url, [
