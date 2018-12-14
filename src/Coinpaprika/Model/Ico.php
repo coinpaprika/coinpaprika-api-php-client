@@ -176,10 +176,14 @@ class Ico
     }
 
     /**
-     * @return array|Condition[]|null
+     * @return array|Condition[]
      */
-    public function getConditions(): ?array
+    public function getConditions(): array
     {
+        if (null === $this->conditions) {
+            return [];
+        }
+
         return $this->conditions;
     }
 
