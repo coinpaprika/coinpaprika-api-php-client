@@ -222,4 +222,18 @@ class Ico
     {
         $this->endDate = $endDate;
     }
+
+    /**
+     * Returns percentage value of received to goal money
+     *
+     * @return int
+     */
+    public function getReceivedPercent(): int
+    {
+        if (!$this->getGoal()) {
+            return 0;
+        }
+
+        return (int) $this->getReceived() * 100 / $this->getGoal();
+    }
 }
