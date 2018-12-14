@@ -17,7 +17,7 @@
         "jms/serializer": "^1.13.0",
         "guzzlehttp/guzzle": "^6.3.3",
         "symfony/yaml": "^4.1.4",
-        "doctrine/cache": "dev-master"
+        "doctrine/cache": "^1.8@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.5 || ^6.0"
