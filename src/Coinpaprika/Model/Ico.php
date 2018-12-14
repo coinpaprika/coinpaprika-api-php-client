@@ -2,8 +2,7 @@
 
 namespace Coinpaprika\Model;
 
-use Coinpaprika\Model\Traits\IdentityTrait;
-use Coinpaprika\Model\Traits\NameTrait;
+use Coinpaprika\Model\Ico\Condition;
 
 /**
  * Class Ico
@@ -14,30 +13,100 @@ use Coinpaprika\Model\Traits\NameTrait;
  */
 class Ico
 {
-    use IdentityTrait, NameTrait;
+    /**
+     * @var string
+     */
+    private $id;
 
     /**
      * @var string
      */
+    private $name;
+
+    /**
+     * @var string|null
+     */
     private $symbol;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    private $new;
+    private $onMarket;
+
+    /**
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @var int|null
+     */
+    private $goal;
+
+    /**
+     * @var int|null
+     */
+    private $received;
+
+    /**
+     * @var array|Condition[]|null
+     */
+    private $conditions;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $startDate;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $endDate;
 
     /**
      * @return string
      */
-    public function getSymbol(): string
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSymbol(): ?string
     {
         return $this->symbol;
     }
 
     /**
-     * @param string $symbol
+     * @param string|null $symbol
      */
-    public function setSymbol(string $symbol): void
+    public function setSymbol(?string $symbol): void
     {
         $this->symbol = $symbol;
     }
@@ -45,16 +114,112 @@ class Ico
     /**
      * @return bool
      */
-    public function isNew(): bool
+    public function isOnMarket(): bool
     {
-        return $this->new;
+        return $this->onMarket;
     }
 
     /**
-     * @param bool $new
+     * @param bool $onMarket
      */
-    public function setNew(bool $new): void
+    public function setOnMarket(bool $onMarket): void
     {
-        $this->new = $new;
+        $this->onMarket = $onMarket;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGoal(): ?int
+    {
+        return $this->goal;
+    }
+
+    /**
+     * @param int|null $goal
+     */
+    public function setGoal(?int $goal): void
+    {
+        $this->goal = $goal;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getReceived(): ?int
+    {
+        return $this->received;
+    }
+
+    /**
+     * @param int|null $received
+     */
+    public function setReceived(?int $received): void
+    {
+        $this->received = $received;
+    }
+
+    /**
+     * @return array|Condition[]|null
+     */
+    public function getConditions(): ?array
+    {
+        return $this->conditions;
+    }
+
+    /**
+     * @param array|Condition[]|null $conditions
+     */
+    public function setConditions(?array $conditions): void
+    {
+        $this->conditions = $conditions;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getStartDate(): ?\DateTime
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime|null $startDate
+     */
+    public function setStartDate(?\DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getEndDate(): ?\DateTime
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param \DateTime|null $endDate
+     */
+    public function setEndDate(?\DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
     }
 }

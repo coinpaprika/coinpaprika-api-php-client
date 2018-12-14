@@ -96,6 +96,25 @@ class ClientTest extends AbstractTestCase
         $this->assertCoin($coins[2], $expectedResponse[2]);
     }
 
+    public function testIcos(): void
+    {
+        $expectedResponse = [
+            array_merge($this->getIcoStructure(), ['name' => 'xxx']),
+            array_merge($this->getIcoStructure(), ['symbol' => 'BBB']),
+            array_merge($this->getIcoStructure(), ['received' => 10]),
+            array_merge($this->getIcoStructure(), ['end_date' => '2018-10-22T00:00:00Z'])
+        ];
+
+        $client = new Client(null, $this->getHttpClientMockWithResponse($expectedResponse));
+        $icos = $client->getIcos();
+
+        $this->assertCount(4, $icos);
+        $this->assertIco($icos[0], $expectedResponse[0]);
+        $this->assertIco($icos[1], $expectedResponse[1]);
+        $this->assertIco($icos[2], $expectedResponse[2]);
+        $this->assertIco($icos[3], $expectedResponse[3]);
+    }
+
     /**
      * @expectedException \Coinpaprika\Exception\ResponseErrorException
      * @expectedExceptionMessage id not found
@@ -144,7 +163,7 @@ class ClientTest extends AbstractTestCase
         $this->assertCoin($search->getCurrencies()[1], $expectedResponse['currencies'][1]);
         $this->assertExchange($search->getExchanges()[0], $expectedResponse['exchanges'][0]);
         $this->assertPerson($search->getPeople()[0], $expectedResponse['people'][0]);
-        $this->assertIco($search->getIcos()[1], $expectedResponse['icos'][1]);
+        $this->assertIcoSearch($search->getIcos()[1], $expectedResponse['icos'][1]);
         $this->assertTag($search->getTags()[0], $expectedResponse['tags'][0]);
     }
 
