@@ -6,7 +6,7 @@ Coinpaprika\Model\Search:
     exchanges:
       type: array<Coinpaprika\Model\Exchange>
     icos:
-      type: array<Coinpaprika\Model\Ico>
+      type: array<Coinpaprika\Model\Search\Ico>
     people:
       type: array<Coinpaprika\Model\Person>
     tags:

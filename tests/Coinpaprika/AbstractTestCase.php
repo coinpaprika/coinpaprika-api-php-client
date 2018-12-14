@@ -5,6 +5,7 @@ namespace Coinpaprika\Tests;
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\Exchange;
 use Coinpaprika\Model\Ico;
+use Coinpaprika\Model\Search\Ico as IcoSearch;
 use Coinpaprika\Model\Person;
 use Coinpaprika\Model\Tag;
 use Coinpaprika\Model\Ticker;
@@ -38,6 +39,34 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
+    protected function getIcoStructure(): array
+    {
+        return [
+            'id' => 'ico1',
+            'name' => 'testing ico',
+            'symbol' => 'ICO',
+            'on_market' => false,
+            'status' => 'ended',
+            'goal' => 1000,
+            'received' => 999,
+            'conditions' => [
+                $this->getIcoConditionStructure(),
+                array_merge($this->getIcoConditionStructure(), ['value' => false, 'comment' => 'aaa'])
+            ],
+            'start_date' => '2018-03-16T00:00:00Z',
+            'end_date' => '2018-05-21T00:00:00Z'
+        ];
+    }
+
+    protected function getIcoConditionStructure(): array
+    {
+        return [
+            'name' => 'con1',
+            'value' => true,
+            'comment' => 'testing'
+        ];
+    }
+
     /**
      * @param   Coin $coin
      * @param   array $expectedResponse
@@ -50,6 +79,28 @@ abstract class AbstractTestCase extends TestCase
         $this->assertEquals($expectedResponse['rank'], $coin->getRank());
         $this->assertEquals($expectedResponse['is_new'], $coin->isNew());
         $this->assertEquals($expectedResponse['is_active'], $coin->isActive());
+    }
+
+    protected function assertIco(Ico $ico, array $expectedResponse): void
+    {
+        $this->assertEquals($expectedResponse['id'], $ico->getId());
+        $this->assertEquals($expectedResponse['name'], $ico->getName());
+        $this->assertEquals($expectedResponse['symbol'], $ico->getSymbol());
+        $this->assertEquals($expectedResponse['on_market'], $ico->isOnMarket());
+        $this->assertEquals($expectedResponse['status'], $ico->getStatus());
+        $this->assertEquals($expectedResponse['goal'], $ico->getGoal());
+        $this->assertEquals($expectedResponse['received'], $ico->getReceived());
+        $this->assertIcoCondition($ico->getConditions()[0], $expectedResponse['conditions'][0]);
+        $this->assertEquals(new \DateTime($expectedResponse['start_date']), $ico->getStartDate());
+        $this->assertEquals(new \DateTime($expectedResponse['end_date']), $ico->getEndDate());
+
+    }
+
+    protected function assertIcoCondition(Ico\Condition $condition, $expectedResponse): void
+    {
+        $this->assertEquals($expectedResponse['name'], $condition->getName());
+        $this->assertEquals($expectedResponse['value'], $condition->isValue());
+        $this->assertEquals($expectedResponse['comment'], $condition->getComment());
     }
 
     /**
@@ -125,7 +176,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * @return array
      */
-    protected function getIcoStructure(): array
+    protected function getIcoSearchStructure(): array
     {
         return [
             'id' => 'acad-academy',
@@ -136,10 +187,10 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param   Ico $ico
+     * @param   IcoSearch $ico
      * @param   array $expectedResponse
      */
-    protected function assertIco(Ico $ico, array $expectedResponse): void
+    protected function assertIcoSearch(IcoSearch $ico, array $expectedResponse): void
     {
         $this->assertEquals($expectedResponse['id'], $ico->getId());
         $this->assertEquals($expectedResponse['name'], $ico->getName());
@@ -211,12 +262,12 @@ abstract class AbstractTestCase extends TestCase
                 array_merge($this->getExchangeStructure(), ['rank' => 10, 'name' => 'Bitmex'])
             ],
             'icos' => [
-                $this->getIcoStructure(),
-                array_merge($this->getIcoStructure(), ['name' => 'bitico'])
+                $this->getIcoSearchStructure(),
+                array_merge($this->getIcoSearchStructure(), ['name' => 'bitico'])
             ],
             'people' => [
                 $this->getPersonStructure(),
-                array_merge($this->getIcoStructure(), ['name' => 'Bit Surname'])
+                array_merge($this->getIcoSearchStructure(), ['name' => 'Bit Surname'])
             ],
             'tags' => [
                 $this->getTagStructure()

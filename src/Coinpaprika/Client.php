@@ -9,6 +9,7 @@ use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Http\Request;
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
+use Coinpaprika\Model\Ico;
 use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
 use GuzzleHttp\Exception\ClientException;
@@ -162,6 +163,24 @@ class Client
 
         return $this->response($response, sprintf('array<%s>', Coin::class));
 
+    }
+
+    /**
+     * @throws \Coinpaprika\Exception\InvalidResponseException
+     * @throws \Coinpaprika\Exception\RateLimitExceededException
+     * @throws \Coinpaprika\Exception\ResponseErrorException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return array|Ico[]
+     */
+    public function getIcos(): array
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('icos')
+        );
+
+        return $this->response($response, sprintf('array<%s>', Ico::class));
     }
 
     /**
