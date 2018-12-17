@@ -69,6 +69,11 @@ class Ico
     private $endDate;
 
     /**
+     * @var array
+     */
+    private $tagIds;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -260,5 +265,21 @@ class Ico
     public function setSuspended(bool $suspended): void
     {
         $this->suspended = $suspended;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTagIds(): array
+    {
+        return $this->tagIds;
+    }
+
+    /**
+     * @param array $tagIds
+     */
+    public function setTagIds(array $tagIds): void
+    {
+        $this->tagIds = $tagIds;
     }
 }

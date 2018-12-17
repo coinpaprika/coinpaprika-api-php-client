@@ -165,7 +165,10 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl('icos')
+            $this->getEndpointUrl('icos'),
+            [
+                'additional_fields' => 'tags'
+            ]
         );
 
         return $this->response($response, sprintf('array<%s>', Ico::class));
