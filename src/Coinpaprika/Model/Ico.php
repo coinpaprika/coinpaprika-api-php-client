@@ -34,6 +34,11 @@ class Ico
     private $onMarket;
 
     /**
+     * @var bool
+     */
+    private $suspended;
+
+    /**
      * @var string
      */
     private $status;
@@ -239,5 +244,21 @@ class Ico
         }
 
         return (int) $this->getReceived() * 100 / $this->getGoal();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuspended(): bool
+    {
+        return $this->suspended;
+    }
+
+    /**
+     * @param bool $suspended
+     */
+    public function setSuspended(bool $suspended): void
+    {
+        $this->suspended = $suspended;
     }
 }

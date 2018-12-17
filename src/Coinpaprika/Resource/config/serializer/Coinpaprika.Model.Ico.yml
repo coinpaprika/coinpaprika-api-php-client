@@ -10,6 +10,8 @@ Coinpaprika\Model\Ico:
     onMarket:
       type: boolean
       serialized_name: on_market
+    suspended:
+      type: boolean
     status:
       type: string
     goal:
