@@ -69,7 +69,7 @@ class Ico
     private $endDate;
 
     /**
-     * @var array|null
+     * @var array|string[]|null
      */
     private $tagIds;
 
