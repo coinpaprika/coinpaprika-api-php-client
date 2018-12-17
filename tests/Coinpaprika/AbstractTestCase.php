@@ -46,6 +46,7 @@ abstract class AbstractTestCase extends TestCase
             'name' => 'testing ico',
             'symbol' => 'ICO',
             'on_market' => false,
+            'suspended' => true,
             'status' => 'ended',
             'goal' => 1000,
             'received' => 999,
@@ -87,6 +88,7 @@ abstract class AbstractTestCase extends TestCase
         $this->assertEquals($expectedResponse['name'], $ico->getName());
         $this->assertEquals($expectedResponse['symbol'], $ico->getSymbol());
         $this->assertEquals($expectedResponse['on_market'], $ico->isOnMarket());
+        $this->assertEquals($expectedResponse['suspended'], $ico->isSuspended());
         $this->assertEquals($expectedResponse['status'], $ico->getStatus());
         $this->assertEquals($expectedResponse['goal'], $ico->getGoal());
         $this->assertEquals($expectedResponse['received'], $ico->getReceived());
