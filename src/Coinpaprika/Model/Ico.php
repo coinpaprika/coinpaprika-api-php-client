@@ -69,7 +69,7 @@ class Ico
     private $endDate;
 
     /**
-     * @var array|string[]|null
+     * @var array|string[]
      */
     private $tagIds;
 
@@ -268,17 +268,21 @@ class Ico
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getTagIds(): ?array
+    public function getTagIds(): array
     {
+        if (null === $this->tagIds) {
+            return [];
+        }
+
         return $this->tagIds;
     }
 
     /**
-     * @param array|null $tagIds
+     * @param array $tagIds
      */
-    public function setTagIds(?array $tagIds): void
+    public function setTagIds(array $tagIds): void
     {
         $this->tagIds = $tagIds;
     }
