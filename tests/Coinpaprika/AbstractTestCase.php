@@ -55,7 +55,8 @@ abstract class AbstractTestCase extends TestCase
                 array_merge($this->getIcoConditionStructure(), ['value' => false, 'comment' => 'aaa'])
             ],
             'start_date' => '2018-03-16T00:00:00Z',
-            'end_date' => '2018-05-21T00:00:00Z'
+            'end_date' => '2018-05-21T00:00:00Z',
+            'tags' => ['test-tag-1', 'test-tag-2']
         ];
     }
 
@@ -95,6 +96,7 @@ abstract class AbstractTestCase extends TestCase
         $this->assertIcoCondition($ico->getConditions()[0], $expectedResponse['conditions'][0]);
         $this->assertEquals(new \DateTime($expectedResponse['start_date']), $ico->getStartDate());
         $this->assertEquals(new \DateTime($expectedResponse['end_date']), $ico->getEndDate());
+        $this->assertEquals($expectedResponse['tags'], $ico->getTagIds());
 
     }
 

@@ -26,3 +26,6 @@ Coinpaprika\Model\Ico:
     endDate:
       type: DateTime
       serialized_name: end_date
+    tagIds:
+      type: array
+      serialized_name: tags
