@@ -154,6 +154,9 @@ class Client
     }
 
     /**
+     *
+     * @param array $parameters API url query params array
+     *
      * @throws \Coinpaprika\Exception\InvalidResponseException
      * @throws \Coinpaprika\Exception\RateLimitExceededException
      * @throws \Coinpaprika\Exception\ResponseErrorException
@@ -161,14 +164,12 @@ class Client
      *
      * @return array|Ico[]
      */
-    public function getIcos(): array
+    public function getIcos(array $parameters = []): array
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
             $this->getEndpointUrl('icos'),
-            [
-                'additional_fields' => 'tags'
-            ]
+            $parameters
         );
 
         return $this->response($response, sprintf('array<%s>', Ico::class));
