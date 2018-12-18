@@ -56,7 +56,7 @@ abstract class AbstractTestCase extends TestCase
             ],
             'start_date' => '2018-03-16T00:00:00Z',
             'end_date' => '2018-05-21T00:00:00Z',
-            'tags' => ['test-tag-1', 'test-tag-2']
+            'tags_ids' => ['test-tag-1', 'test-tag-2']
         ];
     }
 
@@ -96,7 +96,7 @@ abstract class AbstractTestCase extends TestCase
         $this->assertIcoCondition($ico->getConditions()[0], $expectedResponse['conditions'][0]);
         $this->assertEquals(new \DateTime($expectedResponse['start_date']), $ico->getStartDate());
         $this->assertEquals(new \DateTime($expectedResponse['end_date']), $ico->getEndDate());
-        $this->assertEquals($expectedResponse['tags'], $ico->getTagIds());
+        $this->assertEquals($expectedResponse['tags_ids'], $ico->getTagIds());
 
     }
 

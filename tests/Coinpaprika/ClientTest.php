@@ -108,7 +108,7 @@ class ClientTest extends AbstractTestCase
         $client = new Client(null, $this->getHttpClientMockWithResponse($expectedResponse));
 
         $icos = $client->getIcos([
-            'additional_fields' => 'tags'
+            'additional_fields' => 'tags_ids'
         ]);
 
         $this->assertCount(4, $icos);

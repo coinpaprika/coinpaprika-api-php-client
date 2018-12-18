@@ -28,4 +28,4 @@ Coinpaprika\Model\Ico:
       serialized_name: end_date
     tagIds:
       type: array
-      serialized_name: tags
+      serialized_name: tags_ids
