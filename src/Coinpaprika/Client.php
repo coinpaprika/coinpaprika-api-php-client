@@ -26,7 +26,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client
 {
-
     /**
      * @var string
      */
@@ -45,7 +44,7 @@ class Client
     /**
      * @var string
      */
-    private $apiBaseUrl = 'https://api.devpaprika.com/%ver%/';
+    private $apiBaseUrl = 'https://api.coinpaprika.com';
 
     /**
      * Client constructor.
@@ -233,7 +232,7 @@ class Client
      */
     protected function getEndpointUrl(string $endpoint): string
     {
-        return str_replace('%ver%', $this->getApiVersion(), $this->apiBaseUrl).$endpoint;
+        return str_replace('%ver%', $this->getApiVersion(), $this->apiBaseUrl.'/%ver%/').$endpoint;
     }
 
     /**
