@@ -7,6 +7,25 @@ Coinpaprika\Model\Ico:
       type: string
     symbol:
       type: string
-    new:
+    onMarket:
       type: boolean
-      serialized_name: is_new
+      serialized_name: on_market
+    suspended:
+      type: boolean
+    status:
+      type: string
+    goal:
+      type: int
+    received:
+      type: int
+    conditions:
+      type: array<Coinpaprika\Model\Ico\Condition>
+    startDate:
+      type: DateTime
+      serialized_name: start_date
+    endDate:
+      type: DateTime
+      serialized_name: end_date
+    tagIds:
+      type: array
+      serialized_name: tags_ids

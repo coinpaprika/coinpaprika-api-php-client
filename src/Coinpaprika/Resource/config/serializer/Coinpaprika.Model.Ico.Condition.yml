@@ -1,0 +1,9 @@
+Coinpaprika\Model\Ico\Condition:
+  access_type: public_method # defaults to property
+  properties:
+    name:
+      type: string
+    value:
+      type: boolean
+    comment:
+      type: string

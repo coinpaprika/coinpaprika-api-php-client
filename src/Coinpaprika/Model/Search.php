@@ -4,7 +4,7 @@ namespace Coinpaprika\Model;
 
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\Exchange;
-use Coinpaprika\Model\Ico;
+use Coinpaprika\Model\Search\Ico;
 use Coinpaprika\Model\Person;
 use Coinpaprika\Model\Tag;
 
