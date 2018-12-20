@@ -26,7 +26,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client
 {
-    const BASE_URL = 'https://api.coinpaprika.com/%ver%/';
 
     /**
      * @var string
@@ -44,14 +43,21 @@ class Client
     private $serializer;
 
     /**
+     * @var string
+     */
+    private $apiBaseUrl = 'https://api.devpaprika.com/%ver%/';
+
+    /**
      * Client constructor.
      *
-     * @param   string|null         $cacheDir
-     * @param   \GuzzleHttp\Client  $httpClient
+     * @param   string|null        $cacheDir
+     * @param   \GuzzleHttp\Client $httpClient
+     * @param    string            $apiBaseUrl
      */
     public function __construct(
         string $cacheDir = null,
-        \GuzzleHttp\Client $httpClient = null
+        \GuzzleHttp\Client $httpClient = null,
+        string $apiBaseUrl = null
     ) {
         $serializerBuilder = SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/Resource/config/serializer');
@@ -68,6 +74,10 @@ class Client
         }
 
         $this->httpClient = $httpClient;
+
+        if ($apiBaseUrl) {
+            $this->apiBaseUrl = $apiBaseUrl;
+        }
     }
 
     /**
@@ -223,7 +233,7 @@ class Client
      */
     protected function getEndpointUrl(string $endpoint): string
     {
-        return str_replace('%ver%', $this->getApiVersion(), static::BASE_URL).$endpoint;
+        return str_replace('%ver%', $this->getApiVersion(), $this->apiBaseUrl).$endpoint;
     }
 
     /**
