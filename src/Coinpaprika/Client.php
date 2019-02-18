@@ -149,7 +149,28 @@ class Client
         );
 
         return $this->response($response, sprintf('array<%s>', Coin::class));
+    }
 
+    /**
+     * Get coin`s data
+     * 
+     * @param   string $id
+     *
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @return  Coin
+     */
+    public function getCoinByCoinId(string $id): Coin
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl(sprintf('coins/%s', $id))
+        );
+
+        return $this->response($response, Coin::class);
     }
 
     /**
