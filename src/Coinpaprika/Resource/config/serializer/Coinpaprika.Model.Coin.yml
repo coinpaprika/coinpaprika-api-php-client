@@ -7,6 +7,8 @@ Coinpaprika\Model\Coin:
       type: string
     symbol:
       type: string
+    description:
+      type: string
     rank:
       type: int
     new:
@@ -15,3 +17,9 @@ Coinpaprika\Model\Coin:
     active:
       type: boolean
       serialized_name: is_active
+    tokenType:
+      type: string
+      serialized_name: type
+    links:
+      type: array
+      serialized_name: links

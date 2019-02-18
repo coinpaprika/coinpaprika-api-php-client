@@ -19,7 +19,17 @@ class Coin
     /**
      * @var string
      */
+    private $name;
+
+    /**
+     * @var string
+     */
     private $symbol;
+
+    /**
+     * @var string
+     */
+    private $description;
 
     /**
      * @var int
@@ -37,6 +47,27 @@ class Coin
     private $active;
 
     /**
+     * @var array
+     */
+    private $links;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getSymbol(): string
@@ -50,6 +81,22 @@ class Coin
     public function setSymbol(string $symbol): void
     {
         $this->symbol = $symbol;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -98,5 +145,21 @@ class Coin
     public function setActive(bool $active): void
     {
         $this->active = $active;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getLinks(): array
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param array $links
+     */
+    public function setLinks(array $links): void
+    {
+        $this->links = $links;
     }
 }
