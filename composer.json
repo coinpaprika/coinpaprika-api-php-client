@@ -1,7 +1,7 @@
 {
     "name": "coinpaprika/coinpaprika-api-php-client",
     "description": "coinpaprika.com API v1 client",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "type": "library",
     "license": "MIT",
     "keywords": ["coinpaprika"],
