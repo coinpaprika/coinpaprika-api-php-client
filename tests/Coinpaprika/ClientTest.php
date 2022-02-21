@@ -3,6 +3,9 @@
 namespace Coinpaprika\Tests;
 
 use Coinpaprika\Client;
+use Coinpaprika\Exception\InvalidResponseException;
+use Coinpaprika\Exception\RateLimitExceededException;
+use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Model\GlobalStats;
 
 /**
@@ -10,7 +13,7 @@ use Coinpaprika\Model\GlobalStats;
  *
  * @package \Coinpaprika\Tests
  *
- * @author Krzysztof Przybyszewski <kprzybyszewski@greywizard.com>
+ * @author  Krzysztof Przybyszewski <kprzybyszewski@greywizard.com>
  */
 class ClientTest extends AbstractTestCase
 {
@@ -96,34 +99,28 @@ class ClientTest extends AbstractTestCase
         $this->assertCoin($coins[2], $expectedResponse[2]);
     }
 
-    /**
-     * @expectedException \Coinpaprika\Exception\ResponseErrorException
-     * @expectedExceptionMessage id not found
-     */
     public function testErrorResponse(): void
     {
+        $this->expectExceptionMessage("id not found");
+        $this->expectException(ResponseErrorException::class);
         $expectedResponse = [
-            'error' => 'id not found'
+            'error' => 'id not found',
         ];
 
         $client = new Client(null, $this->getHttpClientMockWithResponse($expectedResponse, 404));
         $client->getTickerByCoinId('xxx');
     }
 
-    /**
-     * @expectedException \Coinpaprika\Exception\InvalidResponseException
-     */
     public function testBadResponse(): void
     {
+        $this->expectException(InvalidResponseException::class);
         $client = new Client(null, $this->getHttpClientMockWithResponse([], 444));
         $client->getTickerByCoinId('btc-bitcoin');
     }
 
-    /**
-     * @expectedException \Coinpaprika\Exception\RateLimitExceededException
-     */
     public function testRateLimitExceeded(): void
     {
+        $this->expectException(RateLimitExceededException::class);
         $client = new Client(null, $this->getHttpClientMockWithResponse([], 429));
         $client->getTickerByCoinId('btc-bitcoin');
     }
@@ -178,14 +175,14 @@ class ClientTest extends AbstractTestCase
         $this->assertCount(0, $search->getIcos());
     }
 
-    /**
-     * @expectedException \Coinpaprika\Exception\ResponseErrorException
-     */
     public function testSearchWithLimitError(): void
     {
-        $client = new Client(null, $this->getHttpClientMockWithResponse([
-            'error' => 'invalid parameters'
-        ], 400));
+        $this->expectException(ResponseErrorException::class);
+        $client = new Client(
+            null, $this->getHttpClientMockWithResponse([
+            'error' => 'invalid parameters',
+        ], 400)
+        );
 
         $client->search('t', null, 400);
     }
