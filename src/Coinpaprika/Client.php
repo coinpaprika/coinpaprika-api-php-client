@@ -26,6 +26,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client
 {
+    const BASE_URL = 'https://api.coinpaprika.com/%ver%/';
+
+
     /**
      * @var string
      */
