@@ -3,6 +3,7 @@
 namespace Coinpaprika;
 
 use Coinpaprika\Exception\InvalidResponseException;
+use Coinpaprika\Exception\PaymentRequiredException;
 use Coinpaprika\Exception\RateLimitExceededException;
 use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Http\Request;
@@ -27,6 +28,8 @@ class Client
 {
     const BASE_URL = 'https://api.coinpaprika.com/%ver%/';
 
+    const PRO_BASE_URL = 'https://api-pro.coinpaprika.com/%ver%/';
+
 
     /**
      * @var string
@@ -44,6 +47,11 @@ class Client
     private $serializer;
 
     /**
+     * @var string
+     */
+    private $apiKey;
+
+    /**
      * Client constructor.
      *
      * @param   string|null         $cacheDir
@@ -51,7 +59,8 @@ class Client
      */
     public function __construct(
         string $cacheDir = null,
-        \GuzzleHttp\Client $httpClient = null
+        \GuzzleHttp\Client $httpClient = null,
+        ?string $apiKey = null
     ) {
         $serializerBuilder = SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/Resource/config/serializer');
@@ -68,6 +77,8 @@ class Client
         }
 
         $this->httpClient = $httpClient;
+
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -192,6 +203,11 @@ class Client
         return $this->apiVersion;
     }
 
+    public function setApiKey(string $apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
     /**
      * Get the endpoint URL.
      *
@@ -201,7 +217,9 @@ class Client
      */
     protected function getEndpointUrl(string $endpoint): string
     {
-        return str_replace('%ver%', $this->getApiVersion(), static::BASE_URL).$endpoint;
+        $baseUrl = $this->apiKey ? static::PRO_BASE_URL : static::BASE_URL;
+
+        return str_replace('%ver%', $this->getApiVersion(), $baseUrl).$endpoint;
     }
 
     /**
@@ -223,6 +241,10 @@ class Client
         $defaultHeaders = [
             'User-Agent' => 'Coinpaprika API Client - PHP'
         ];
+
+        if ($this->apiKey) {
+            $defaultHeaders['Authorization'] = $this->apiKey;
+        }
 
         if (Request::METHOD_GET === $method) {
             $params = http_build_query($params);
@@ -255,6 +277,10 @@ class Client
         // rate limit exceeded
         if ($statusCode === 429) {
             throw new RateLimitExceededException('Response code from API 429. Rate limit exceeded.');
+        }
+
+        if ($statusCode === 403) {
+            throw new PaymentRequiredException('Payment required for this api key.');
         }
 
         // check for errors
