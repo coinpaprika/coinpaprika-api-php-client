@@ -52,9 +52,9 @@ class Client
     /**
      * Client constructor.
      *
-     * @param   string|null        $cacheDir
-     * @param   \GuzzleHttp\Client $httpClient
-     * @param    string            $apiBaseUrl
+     * @param  string|null  $cacheDir
+     * @param  \GuzzleHttp\Client|null  $httpClient
+     * @param  string|null  $apiBaseUrl
      */
     public function __construct(
         string $cacheDir = null,
