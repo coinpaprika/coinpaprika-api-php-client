@@ -31,7 +31,6 @@ class Client
 
     const PRO_BASE_URL = 'https://api-pro.coinpaprika.com/%ver%/';
 
-
     /**
      * @var string
      */
