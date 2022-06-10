@@ -8,6 +8,7 @@ use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Http\Request;
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
+use Coinpaprika\Model\Ico;
 use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
 use GuzzleHttp\Exception\ClientException;
@@ -25,8 +26,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client
 {
-    const BASE_URL = 'https://api.coinpaprika.com/%ver%/';
-
     /**
      * @var string
      */
@@ -43,14 +42,21 @@ class Client
     private $serializer;
 
     /**
+     * @var string
+     */
+    private $apiBaseUrl = 'https://api.coinpaprika.com';
+
+    /**
      * Client constructor.
      *
-     * @param   string|null         $cacheDir
-     * @param   \GuzzleHttp\Client  $httpClient
+     * @param   string|null        $cacheDir
+     * @param   \GuzzleHttp\Client $httpClient
+     * @param    string            $apiBaseUrl
      */
     public function __construct(
         string $cacheDir = null,
-        \GuzzleHttp\Client $httpClient = null
+        \GuzzleHttp\Client $httpClient = null,
+        string $apiBaseUrl = null
     ) {
         $serializerBuilder = SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/Resource/config/serializer');
@@ -67,6 +73,10 @@ class Client
         }
 
         $this->httpClient = $httpClient;
+
+        if ($apiBaseUrl) {
+            $this->apiBaseUrl = $apiBaseUrl;
+        }
     }
 
     /**
@@ -153,6 +163,28 @@ class Client
     }
 
     /**
+     *
+     * @param array $parameters API url query params array
+     *
+     * @throws \Coinpaprika\Exception\InvalidResponseException
+     * @throws \Coinpaprika\Exception\RateLimitExceededException
+     * @throws \Coinpaprika\Exception\ResponseErrorException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return array|Ico[]
+     */
+    public function getIcos(array $parameters = []): array
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl('icos'),
+            $parameters
+        );
+
+        return $this->response($response, sprintf('array<%s>', Ico::class));
+    }
+
+    /**
      * @param   string     $query       Search query string
      * @param   array|null $categories  When null it defaults to all possible categories
      * @param   int        $limit       Per category limit
@@ -200,7 +232,7 @@ class Client
      */
     protected function getEndpointUrl(string $endpoint): string
     {
-        return str_replace('%ver%', $this->getApiVersion(), static::BASE_URL).$endpoint;
+        return str_replace('%ver%', $this->getApiVersion(), $this->apiBaseUrl.'/%ver%/').$endpoint;
     }
 
     /**

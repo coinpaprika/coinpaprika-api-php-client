@@ -1,0 +1,12 @@
+Coinpaprika\Model\Search\Ico:
+  access_type: public_method # defaults to property
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    symbol:
+      type: string
+    new:
+      type: boolean
+      serialized_name: is_new
