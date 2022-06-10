@@ -31,7 +31,6 @@ class Client
 
     const PRO_BASE_URL = 'https://api-pro.coinpaprika.com/%ver%/';
 
-
     /**
      * @var string
      */
@@ -52,11 +51,13 @@ class Client
      */
     private $apiKey;
 
+
     /**
      * Client constructor.
      *
-     * @param   string|null         $cacheDir
-     * @param   \GuzzleHttp\Client  $httpClient
+     * @param  string|null  $cacheDir
+     * @param  \GuzzleHttp\Client|null  $httpClient
+     * @param  string|null  $apiBaseUrl
      */
     public function __construct(
         string $cacheDir = null,
