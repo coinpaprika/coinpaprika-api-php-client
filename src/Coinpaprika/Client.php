@@ -9,6 +9,7 @@ use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Http\Request;
 use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
+use Coinpaprika\Model\HistoricalTicker;
 use Coinpaprika\Model\Ico;
 use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
@@ -143,6 +144,30 @@ class Client
         );
 
         return $this->response($response, Ticker::class);
+    }
+
+    /**
+     * Get coin`s historical ticker data
+     *
+     * @param   string $id
+     * @param   string $start
+     * @param   string $interval
+     *
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @return  HistoricalTicker[]
+     */
+    public function getHistoricalTickerByCoinId(string $id, string $start, string $interval): array
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl(sprintf('tickers/%s/historical?start=%s&interval=%s', $id, $start, $interval))
+        );
+
+        return $this->response($response, sprintf('array<%s>', HistoricalTicker::class));
     }
 
     /**
