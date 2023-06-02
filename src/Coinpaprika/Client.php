@@ -8,6 +8,7 @@ use Coinpaprika\Exception\RateLimitExceededException;
 use Coinpaprika\Exception\ResponseErrorException;
 use Coinpaprika\Http\Request;
 use Coinpaprika\Model\Coin;
+use Coinpaprika\Model\CoinMeta;
 use Coinpaprika\Model\GlobalStats;
 use Coinpaprika\Model\HistoricalTicker;
 use Coinpaprika\Model\Ico;
@@ -235,6 +236,28 @@ class Client
         );
 
         return $this->response($response, OHLCV::class);
+    }
+
+    /**
+     * OHLCV
+     *
+     * @param   string $id
+     *
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @return  CoinMeta
+     */
+    public function getTokenMeta(string $id): CoinMeta
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl(sprintf('coins/%s', $id))
+        );
+
+        return $this->response($response, CoinMeta::class);
     }
 
     /**
