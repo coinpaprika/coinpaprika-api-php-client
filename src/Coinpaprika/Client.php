@@ -11,6 +11,7 @@ use Coinpaprika\Model\Coin;
 use Coinpaprika\Model\GlobalStats;
 use Coinpaprika\Model\HistoricalTicker;
 use Coinpaprika\Model\Ico;
+use Coinpaprika\Model\OHLCV;
 use Coinpaprika\Model\Search;
 use Coinpaprika\Model\Ticker;
 use GuzzleHttp\Exception\ClientException;
@@ -211,6 +212,28 @@ class Client
         );
 
         return $this->response($response, sprintf('array<%s>', Ico::class));
+    }
+
+    /**
+     * OHLCV
+     *
+     * @param   string $id
+     *
+     * @throws  GuzzleException
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @return  OHLCV
+     */
+    public function getOHLCV(string $id): OHLCV
+    {
+        $response = $this->sendRequest(
+            Request::METHOD_GET,
+            $this->getEndpointUrl(sprintf('coins/%s/ohlcv/latest', $id))
+        );
+
+        return $this->response($response, OHLCV::class);
     }
 
     /**
