@@ -218,6 +218,7 @@ class Client
      * OHLCV
      *
      * @param   string $id
+     * @param   string $interval
      *
      * @throws  GuzzleException
      * @throws  ResponseErrorException
@@ -226,11 +227,11 @@ class Client
      *
      * @return  OHLCV
      */
-    public function getOHLCV(string $id): OHLCV
+    public function getOHLCV(string $id, string $interval): OHLCV
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('coins/%s/ohlcv/latest', $id))
+            $this->getEndpointUrl(sprintf('coins/%s/ohlcv/latest?interval=%s', $id, $interval))
         );
 
         return $this->response($response, OHLCV::class);
