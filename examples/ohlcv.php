@@ -5,6 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $client = new \Coinpaprika\Client();
 
 // OHLCV data for technical analysis, identifying price trends and potential trading opportunities, can also be used for machine learning analysis to gain insights into the cryptocurrency market.
+// The default interval is 24H
 $data = $client->getOHLCV('fake-coin');
 echo sprintf(
     "TimeOpen: %s, TimeClose: %s, Open: %s, Close: %s, High: %s, Low: %s, Volume: %s, MarketCap: %s\n",
