@@ -63,8 +63,8 @@ class Client
      * @param  string|null  $apiBaseUrl
      */
     public function __construct(
-        string $cacheDir = null,
-        \GuzzleHttp\Client $httpClient = null,
+        ?string $cacheDir = null,
+        ?\GuzzleHttp\Client $httpClient = null,
         ?string $apiKey = null
     ) {
         $serializerBuilder = SerializerBuilder::create()
@@ -272,7 +272,7 @@ class Client
      *
      * @return Search
      */
-    public function search(string $query, array $categories = null, int $limit = null): Search
+    public function search(string $query, ?array $categories = null, ?int $limit = null): Search
     {
         $params = array_filter([
             'q' => $query,
@@ -297,6 +297,275 @@ class Client
     public function getApiVersion(): string
     {
         return $this->apiVersion;
+    }
+
+    /**
+     * Get coin's Twitter timeline
+     *
+     * @param string $coinId
+     * @return array
+     */
+    public function getCoinTwitter(string $coinId): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/twitter', $coinId)))
+        );
+    }
+
+    /**
+     * Get coin's events
+     *
+     * @param string $coinId
+     * @return array
+     */
+    public function getCoinEvents(string $coinId): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/events', $coinId)))
+        );
+    }
+
+    /**
+     * Get exchanges where a coin is listed
+     *
+     * @param string $coinId
+     * @return array
+     */
+    public function getCoinExchanges(string $coinId): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/exchanges', $coinId)))
+        );
+    }
+
+    /**
+     * Get markets for a coin
+     *
+     * @param string $coinId
+     * @param array $params Optional: quotes
+     * @return array
+     */
+    public function getCoinMarkets(string $coinId, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/markets', $coinId)), $params)
+        );
+    }
+
+    /**
+     * Get historical OHLCV data for a coin
+     *
+     * @param string $coinId
+     * @param string $start Start date (ISO-8601 or yyyy-mm-dd)
+     * @param array $params Optional: end, limit, quote
+     * @return array
+     */
+    public function getHistoricalOHLCV(string $coinId, string $start, array $params = []): array
+    {
+        $params['start'] = $start;
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/historical', $coinId)), $params)
+        );
+    }
+
+    /**
+     * Get today's OHLCV data for a coin (updates until day close)
+     *
+     * @param string $coinId
+     * @param array $params Optional: quote
+     * @return array
+     */
+    public function getTodayOHLCV(string $coinId, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/today', $coinId)), $params)
+        );
+    }
+
+    /**
+     * Get coin ID mappings to other data providers
+     *
+     * @param array $params Optional: limit
+     * @return array
+     */
+    public function getCoinsMappings(array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('coins/mappings'), $params)
+        );
+    }
+
+    /**
+     * Get person details by ID
+     *
+     * @param string $personId
+     * @return array
+     */
+    public function getPersonById(string $personId): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('people/%s', $personId)))
+        );
+    }
+
+    /**
+     * Get all tags
+     *
+     * @param array $params Optional: additional_fields
+     * @return array
+     */
+    public function getTags(array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('tags'), $params)
+        );
+    }
+
+    /**
+     * Get tag by ID
+     *
+     * @param string $tagId
+     * @param array $params Optional: additional_fields
+     * @return array
+     */
+    public function getTagById(string $tagId, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('tags/%s', $tagId)), $params)
+        );
+    }
+
+    /**
+     * Get list of exchanges
+     *
+     * @param array $params Optional: quotes
+     * @return array
+     */
+    public function getExchanges(array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('exchanges'), $params)
+        );
+    }
+
+    /**
+     * Get exchange by ID
+     *
+     * @param string $exchangeId
+     * @param array $params Optional: quotes
+     * @return array
+     */
+    public function getExchangeById(string $exchangeId, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('exchanges/%s', $exchangeId)), $params)
+        );
+    }
+
+    /**
+     * Get markets on an exchange
+     *
+     * @param string $exchangeId
+     * @param array $params Optional: quotes
+     * @return array
+     */
+    public function getExchangeMarkets(string $exchangeId, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('exchanges/%s/markets', $exchangeId)), $params)
+        );
+    }
+
+    /**
+     * Convert between currencies
+     *
+     * @param array $params Required: base_currency_id, quote_currency_id, amount
+     * @return array
+     */
+    public function priceConverter(array $params): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('price-converter'), $params)
+        );
+    }
+
+    /**
+     * Get list of contract platforms
+     *
+     * @return array
+     */
+    public function getPlatforms(): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('contracts'))
+        );
+    }
+
+    /**
+     * Get all contracts on a platform
+     *
+     * @param string $platformId e.g., 'eth-ethereum'
+     * @return array
+     */
+    public function getContracts(string $platformId): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s', $platformId)))
+        );
+    }
+
+    /**
+     * Get ticker data by contract address
+     *
+     * @param string $platformId
+     * @param string $contractAddress
+     * @param array $params Optional: quotes
+     * @return array
+     */
+    public function getTickerByContract(string $platformId, string $contractAddress, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s', $platformId, $contractAddress)), $params)
+        );
+    }
+
+    /**
+     * Get historical ticker data by contract address
+     *
+     * @param string $platformId
+     * @param string $contractAddress
+     * @param array $params Required: start. Optional: end, limit, quote, interval
+     * @return array
+     */
+    public function getHistoricalByContract(string $platformId, string $contractAddress, array $params = []): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s/historical', $platformId, $contractAddress)), $params)
+        );
+    }
+
+    /**
+     * Get API key usage information (requires API key)
+     *
+     * @return array
+     */
+    public function getKeyInfo(): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('key/info'))
+        );
+    }
+
+    /**
+     * Get recent changelog entry IDs
+     *
+     * @return array
+     */
+    public function getChangelogIds(): array
+    {
+        return $this->responseRaw(
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl('changelog/ids'))
+        );
     }
 
     public function setApiKey(string $apiKey)
@@ -399,7 +668,7 @@ class Client
     }
 
     /**
-     * Unmarshal JSON
+     * Unmarshal JSON via JMS Serializer (typed models)
      *
      * @param   ResponseInterface $response
      * @param   string            $type
@@ -417,5 +686,32 @@ class Client
         $this->validateResponse($response);
 
         return $this->serializer->deserialize($response->getBody(), $type, 'json');
+    }
+
+    /**
+     * Return raw decoded JSON array
+     *
+     * @param   ResponseInterface $response
+     *
+     * @throws  ResponseErrorException
+     * @throws  RateLimitExceededException
+     * @throws  InvalidResponseException
+     *
+     * @return  array
+     */
+    protected function responseRaw(ResponseInterface $response): array
+    {
+        $this->validateResponse($response);
+
+        $body = (string) $response->getBody();
+        $decoded = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new InvalidResponseException(
+                sprintf('Invalid JSON response: %s', json_last_error_msg())
+            );
+        }
+
+        return $decoded;
     }
 }

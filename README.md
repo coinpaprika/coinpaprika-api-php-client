@@ -19,7 +19,7 @@ This library provides convenient way to use [coinpaprika.com API](https://api.co
 
 ## Requirements
 
-* PHP >= 7.1
+* PHP >= 8.0
 * (optional) PHPUnit to run tests.
 
 ## Install
@@ -67,6 +67,65 @@ To use paid version set the api key
  $client->setApiKey('PROVIDED_API_KEY');
  $coins = $client->getCoins();
  ```
+
+## API Coverage
+
+```php
+$client = new \Coinpaprika\Client();
+```
+
+### Market Data
+```php
+$client->getGlobalStats();                    // Global market overview
+$client->getCoins();                          // List all coins
+$client->getTokenMeta('btc-bitcoin');         // Coin details
+$client->getTickers();                        // All tickers
+$client->getTickerByCoinId('btc-bitcoin');    // Ticker for coin
+$client->getHistoricalTickerByCoinId('btc-bitcoin', '2024-01-01', '24h'); // Historical
+```
+
+### OHLCV
+```php
+$client->getOHLCV('btc-bitcoin', '24h');                         // Latest OHLCV
+$client->getTodayOHLCV('btc-bitcoin');                           // Today's OHLCV
+$client->getHistoricalOHLCV('btc-bitcoin', '2024-01-01');        // Historical OHLCV
+```
+
+### Exchanges
+```php
+$client->getExchanges();                             // List exchanges
+$client->getExchangeById('binance');                 // Exchange details
+$client->getExchangeMarkets('binance');              // Markets on exchange
+```
+
+### Coins
+```php
+$client->getCoinTwitter('btc-bitcoin');              // Twitter timeline
+$client->getCoinEvents('btc-bitcoin');               // Events
+$client->getCoinExchanges('btc-bitcoin');            // Exchanges listing coin
+$client->getCoinMarkets('btc-bitcoin');              // Markets for coin
+$client->getCoinsMappings();                         // ID mappings (Pro)
+```
+
+### Contracts
+```php
+$client->getPlatforms();                                          // List platforms
+$client->getContracts('eth-ethereum');                            // Contracts on Ethereum
+$client->getTickerByContract('eth-ethereum', '0xdac1...');        // Ticker by contract
+$client->getHistoricalByContract('eth-ethereum', '0xdac1...', ['start' => '2024-01-01']);
+```
+
+### Other
+```php
+$client->search('bitcoin');                          // Search
+$client->priceConverter(['base_currency_id' => 'btc-bitcoin', 'quote_currency_id' => 'usd-us-dollars', 'amount' => 1]);
+$client->getPersonById('vitalik-buterin');            // Person details
+$client->getTags();                                   // List tags
+$client->getTagById('blockchain-service');             // Tag details
+$client->getKeyInfo();                                // API key info
+$client->getChangelogIds();                           // Changelog IDs (Pro)
+$client->getIcos();                                   // ICOs
+```
 
 ## Examples
 
