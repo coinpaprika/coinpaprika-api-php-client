@@ -1,0 +1,9 @@
+Coinpaprika\Model\TeamMember:
+  access_type: public_method
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    position:
+      type: string

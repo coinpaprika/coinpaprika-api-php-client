@@ -1,0 +1,8 @@
+Coinpaprika\Model\KeyInfo\Usage:
+  access_type: public_method
+  properties:
+    message:
+      type: string
+    currentMonth:
+      type: Coinpaprika\Model\KeyInfo\Usage\CurrentMonth
+      serialized_name: current_month

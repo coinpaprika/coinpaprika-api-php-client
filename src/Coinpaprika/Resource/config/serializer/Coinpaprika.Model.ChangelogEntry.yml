@@ -1,0 +1,15 @@
+Coinpaprika\Model\ChangelogEntry:
+  access_type: public_method
+  properties:
+    currencyId:
+      type: string
+      serialized_name: currency_id
+    oldId:
+      type: string
+      serialized_name: old_id
+    newId:
+      type: string
+      serialized_name: new_id
+    changedAt:
+      type: string
+      serialized_name: changed_at
