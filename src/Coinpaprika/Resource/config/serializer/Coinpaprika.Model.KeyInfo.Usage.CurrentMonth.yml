@@ -1,0 +1,9 @@
+Coinpaprika\Model\KeyInfo\Usage\CurrentMonth:
+  access_type: public_method
+  properties:
+    requestsMade:
+      type: int
+      serialized_name: requests_made
+    requestsLeft:
+      type: int
+      serialized_name: requests_left

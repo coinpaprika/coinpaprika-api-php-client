@@ -1,0 +1,18 @@
+Coinpaprika\Model\CoinMapping:
+  access_type: public_method
+  properties:
+    coinpaprika:
+      type: string
+    coinmarketcap:
+      type: string
+    coingecko:
+      type: string
+    cryptocompare:
+      type: string
+    isin:
+      type: string
+    dti:
+      type: string
+    updatedAt:
+      type: string
+      serialized_name: updated_at

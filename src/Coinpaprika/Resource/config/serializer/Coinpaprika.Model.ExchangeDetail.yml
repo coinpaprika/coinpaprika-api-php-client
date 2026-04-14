@@ -1,0 +1,49 @@
+Coinpaprika\Model\ExchangeDetail:
+  access_type: public_method
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    type:
+      type: array<string>
+    description:
+      type: string
+    active:
+      type: boolean
+    websiteStatus:
+      type: boolean
+      serialized_name: website_status
+    apiStatus:
+      type: boolean
+      serialized_name: api_status
+    message:
+      type: string
+    links:
+      type: array
+    fiats:
+      type: array
+    quotes:
+      type: array
+    marketsDataFetched:
+      type: boolean
+      serialized_name: markets_data_fetched
+    adjustedRank:
+      type: int
+      serialized_name: adjusted_rank
+    reportedRank:
+      type: int
+      serialized_name: reported_rank
+    currencies:
+      type: int
+    markets:
+      type: int
+    sessionsPerMonth:
+      type: int
+      serialized_name: sessions_per_month
+    confidenceScore:
+      type: float
+      serialized_name: confidence_score
+    lastUpdated:
+      type: string
+      serialized_name: last_updated

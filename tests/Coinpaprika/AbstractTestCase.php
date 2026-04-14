@@ -9,10 +9,13 @@ use Coinpaprika\Model\Search\Ico as IcoSearch;
 use Coinpaprika\Model\Person;
 use Coinpaprika\Model\Tag;
 use Coinpaprika\Model\Ticker;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -287,7 +290,7 @@ abstract class AbstractTestCase extends TestCase
 
         $responseMock
             ->method('getBody')
-            ->willReturn($responseBody)
+            ->willReturn(Utils::streamFor($responseBody))
         ;
 
         $responseMock
@@ -301,19 +304,31 @@ abstract class AbstractTestCase extends TestCase
             ->willReturn($responseMock)
         ;
 
-        if ($httpCode >= 400) {
+        return $httpClientMock;
+    }
 
-            $exception = new ClientException(
-                sprintf('HTTP code: %s', $httpCode),
-                $this->createMock(RequestInterface::class),
-                $responseMock
-            );
-
-            $httpClientMock
-                ->method('request')
-                ->willThrowException($exception);
+    /**
+     * Build a real Guzzle client backed by a MockHandler so tests can assert the
+     * URL/query/method of the last outbound request via $mock->getLastRequest().
+     *
+     * @param  array  $responses  list of response bodies (arrays) or Response objects
+     * @param  array  $statuses   HTTP status per response (default 200)
+     * @return array{0: GuzzleClient, 1: MockHandler}
+     */
+    protected function makeGuzzleWithMock(array $responses, array $statuses = []): array
+    {
+        $queue = [];
+        foreach ($responses as $i => $body) {
+            if ($body instanceof Response) {
+                $queue[] = $body;
+                continue;
+            }
+            $queue[] = new Response($statuses[$i] ?? 200, [], json_encode($body));
         }
 
-        return $httpClientMock;
+        $mock = new MockHandler($queue);
+        $stack = HandlerStack::create($mock);
+
+        return [new GuzzleClient(['handler' => $stack]), $mock];
     }
 }

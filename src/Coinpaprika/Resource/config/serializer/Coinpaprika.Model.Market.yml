@@ -1,0 +1,44 @@
+Coinpaprika\Model\Market:
+  access_type: public_method
+  properties:
+    exchangeId:
+      type: string
+      serialized_name: exchange_id
+    exchangeName:
+      type: string
+      serialized_name: exchange_name
+    pair:
+      type: string
+    baseCurrencyId:
+      type: string
+      serialized_name: base_currency_id
+    baseCurrencyName:
+      type: string
+      serialized_name: base_currency_name
+    quoteCurrencyId:
+      type: string
+      serialized_name: quote_currency_id
+    quoteCurrencyName:
+      type: string
+      serialized_name: quote_currency_name
+    marketUrl:
+      type: string
+      serialized_name: market_url
+    category:
+      type: string
+    feeType:
+      type: string
+      serialized_name: fee_type
+    outlier:
+      type: boolean
+    adjustedVolume24hShare:
+      type: float
+      serialized_name: adjusted_volume_24h_share
+    trustScore:
+      type: string
+      serialized_name: trust_score
+    lastUpdated:
+      type: string
+      serialized_name: last_updated
+    quotes:
+      type: array
