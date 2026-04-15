@@ -1,0 +1,16 @@
+Coinpaprika\Model\KeyInfo:
+  access_type: public_method
+  properties:
+    plan:
+      type: string
+    planStartedAt:
+      type: string
+      serialized_name: plan_started_at
+    planStatus:
+      type: string
+      serialized_name: plan_status
+    portalUrl:
+      type: string
+      serialized_name: portal_url
+    usage:
+      type: Coinpaprika\Model\KeyInfo\Usage
