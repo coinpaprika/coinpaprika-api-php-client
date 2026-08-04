@@ -1,6 +1,6 @@
 # Coinpaprika API PHP Client
 [![Coins](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/global&label=coins&query=$.cryptocurrencies_number&colorB=lightgrey&maxAge=3600)](https://coinpaprika.com)
-[![Bitcoin Price USD](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/ticker/btc-bitcoin&label=Bitcoin&query=$.price_usd&colorB=brightgreen&prefix=$%20&maxAge=3600)](https://coinpaprika.com)
+[![Bitcoin Price USD](https://img.shields.io/badge/dynamic/json.svg?url=https://api.coinpaprika.com/v1/tickers/btc-bitcoin&label=Bitcoin&query=$.quotes.USD.price&colorB=brightgreen&prefix=$%20&maxAge=3600)](https://coinpaprika.com)
 
 [![Logo](https://coinpaprika.com/static/files/d6d3c6e3.svg#greywizard/rock-coin-web/assets/coin/img/cp-logo-beta.svg)](https://api.coinpaprika.com/)
 
@@ -131,8 +131,8 @@ $client->getIcos();                                   // Ico[]
 
 Endpoints come in two flavors:
 
-- **Typed** — returned as JMS-deserialized model classes under `Coinpaprika\Model\*`. Covers the bulk of the surface: `GlobalStats`, `Ticker`, `HistoricalTicker`, `Coin`, `CoinMeta`, `OHLCV`, `Ico`, `Search`, `Market`, `ExchangeDetail`, `KeyInfo`, `CoinMapping`, `ChangelogEntry`.
-- **Raw `array`** — auxiliary endpoints whose shape is easier to work with as a plain decoded-JSON blob (Twitter timelines, events, tags, contracts, price converter, etc.). The [Coinpaprika API reference](https://docs.coinpaprika.com/) is the source of truth for those shapes.
+- **Typed**: returned as JMS-deserialized model classes under `Coinpaprika\Model\*`. Covers the bulk of the surface: `GlobalStats`, `Ticker`, `HistoricalTicker`, `Coin`, `CoinMeta`, `OHLCV`, `Ico`, `Search`, `Market`, `ExchangeDetail`, `KeyInfo`, `CoinMapping`, `ChangelogEntry`.
+- **Raw `array`**: auxiliary endpoints whose shape is easier to work with as a plain decoded-JSON blob (Twitter timelines, events, tags, contracts, price converter, etc.). The [Coinpaprika API reference](https://docs.coinpaprika.com/) is the source of truth for those shapes.
 
 ## Examples
 
@@ -148,7 +148,7 @@ Load/latency profiling:
 ```bash
 STRESS_ITERATIONS=100 php examples/stressTest.php              # ~10s at default 100ms delay
 STRESS_ITERATIONS=500 STRESS_DELAY_MS=50 php examples/stressTest.php
-API_KEY=xxx STRESS_ITERATIONS=1000 php examples/stressTest.php # Pro bypasses rate limits
+API_KEY=xxx STRESS_ITERATIONS=1000 php examples/stressTest.php # Pro plans raise the rate limit
 ```
 
 ## Changelog

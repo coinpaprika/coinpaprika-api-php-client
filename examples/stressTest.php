@@ -24,7 +24,7 @@
  *   STRESS_ITERATIONS   Total number of requests to issue    (default 100)
  *   STRESS_DELAY_MS     Sleep between calls in milliseconds  (default 100)
  *   STRESS_MAX_429      Stop after N 429 responses in a row  (default 5)
- *   API_KEY             Optional Pro API key (bypasses free-tier rate limits)
+ *   API_KEY             Optional Pro API key (raises the free-tier rate limit)
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
