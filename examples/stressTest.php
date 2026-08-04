@@ -7,11 +7,11 @@
  * measure:
  *   - throughput (requests/sec)
  *   - per-call latency (min / p50 / p95 / p99 / max)
- *   - memory stability (should not grow unboundedly — surfaces leaks in the
+ *   - memory stability (should not grow unboundedly, which surfaces leaks in the
  *     serializer cache or HTTP stack)
  *   - error-handling behavior under rate-limiting (429) and transient 5xx
  *
- * It does NOT try to maximize concurrency — it stays sequential so the
+ * It does NOT try to maximize concurrency. It stays sequential so the
  * measurements reflect what a real single-process caller would see. To find
  * rate-limit ceilings lower `STRESS_DELAY_MS` to zero.
  *
