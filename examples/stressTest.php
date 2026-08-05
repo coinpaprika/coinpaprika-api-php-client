@@ -7,11 +7,11 @@
  * measure:
  *   - throughput (requests/sec)
  *   - per-call latency (min / p50 / p95 / p99 / max)
- *   - memory stability (should not grow unboundedly — surfaces leaks in the
+ *   - memory stability (should not grow unboundedly, which surfaces leaks in the
  *     serializer cache or HTTP stack)
  *   - error-handling behavior under rate-limiting (429) and transient 5xx
  *
- * It does NOT try to maximize concurrency — it stays sequential so the
+ * It does NOT try to maximize concurrency. It stays sequential so the
  * measurements reflect what a real single-process caller would see. To find
  * rate-limit ceilings lower `STRESS_DELAY_MS` to zero.
  *
@@ -24,7 +24,7 @@
  *   STRESS_ITERATIONS   Total number of requests to issue    (default 100)
  *   STRESS_DELAY_MS     Sleep between calls in milliseconds  (default 100)
  *   STRESS_MAX_429      Stop after N 429 responses in a row  (default 5)
- *   API_KEY             Optional Pro API key (bypasses free-tier rate limits)
+ *   API_KEY             Optional Pro API key (raises the free-tier rate limit)
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
