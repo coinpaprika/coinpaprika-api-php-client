@@ -34,7 +34,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client
 {
-    const VERSION = '1.5.0';
+    const VERSION = '1.5.1';
 
     const BASE_URL = 'https://api.coinpaprika.com/%ver%/';
 
@@ -148,7 +148,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('tickers/%s', $id))
+            $this->getEndpointUrl(sprintf('tickers/%s', self::seg($id)))
         );
 
         return $this->response($response, Ticker::class);
@@ -172,7 +172,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('tickers/%s/historical', $id)),
+            $this->getEndpointUrl(sprintf('tickers/%s/historical', self::seg($id))),
             ['start' => $start, 'interval' => $interval]
         );
 
@@ -239,7 +239,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('coins/%s/ohlcv/latest', $id)),
+            $this->getEndpointUrl(sprintf('coins/%s/ohlcv/latest', self::seg($id))),
             ['interval' => $interval]
         );
 
@@ -262,7 +262,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('coins/%s', $id))
+            $this->getEndpointUrl(sprintf('coins/%s', self::seg($id)))
         );
 
         return $this->response($response, CoinMeta::class);
@@ -316,7 +316,7 @@ class Client
     public function getCoinTwitter(string $coinId): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/twitter', $coinId)))
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/twitter', self::seg($coinId))))
         );
     }
 
@@ -329,7 +329,7 @@ class Client
     public function getCoinEvents(string $coinId): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/events', $coinId)))
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/events', self::seg($coinId))))
         );
     }
 
@@ -342,7 +342,7 @@ class Client
     public function getCoinExchanges(string $coinId): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/exchanges', $coinId)))
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/exchanges', self::seg($coinId))))
         );
     }
 
@@ -357,7 +357,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('coins/%s/markets', $coinId)),
+            $this->getEndpointUrl(sprintf('coins/%s/markets', self::seg($coinId))),
             $params
         );
 
@@ -376,7 +376,7 @@ class Client
     {
         $params['start'] = $start;
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/historical', $coinId)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/historical', self::seg($coinId))), $params)
         );
     }
 
@@ -390,7 +390,7 @@ class Client
     public function getTodayOHLCV(string $coinId, array $params = []): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/today', $coinId)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('coins/%s/ohlcv/today', self::seg($coinId))), $params)
         );
     }
 
@@ -420,7 +420,7 @@ class Client
     public function getPersonById(string $personId): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('people/%s', $personId)))
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('people/%s', self::seg($personId))))
         );
     }
 
@@ -447,7 +447,7 @@ class Client
     public function getTagById(string $tagId, array $params = []): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('tags/%s', $tagId)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('tags/%s', self::seg($tagId))), $params)
         );
     }
 
@@ -479,7 +479,7 @@ class Client
     {
         $response = $this->sendRequest(
             Request::METHOD_GET,
-            $this->getEndpointUrl(sprintf('exchanges/%s', $exchangeId)),
+            $this->getEndpointUrl(sprintf('exchanges/%s', self::seg($exchangeId))),
             $params
         );
 
@@ -496,7 +496,7 @@ class Client
     public function getExchangeMarkets(string $exchangeId, array $params = []): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('exchanges/%s/markets', $exchangeId)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('exchanges/%s/markets', self::seg($exchangeId))), $params)
         );
     }
 
@@ -534,7 +534,7 @@ class Client
     public function getContracts(string $platformId): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s', $platformId)))
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s', self::seg($platformId))))
         );
     }
 
@@ -549,7 +549,7 @@ class Client
     public function getTickerByContract(string $platformId, string $contractAddress, array $params = []): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s', $platformId, $contractAddress)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s', self::seg($platformId), self::seg($contractAddress))), $params)
         );
     }
 
@@ -564,7 +564,7 @@ class Client
     public function getHistoricalByContract(string $platformId, string $contractAddress, array $params = []): array
     {
         return $this->responseRaw(
-            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s/historical', $platformId, $contractAddress)), $params)
+            $this->sendRequest(Request::METHOD_GET, $this->getEndpointUrl(sprintf('contracts/%s/%s/historical', self::seg($platformId), self::seg($contractAddress))), $params)
         );
     }
 
@@ -616,7 +616,62 @@ class Client
     {
         $baseUrl = $this->apiKey ? static::PRO_BASE_URL : static::BASE_URL;
 
-        return str_replace('%ver%', $this->getApiVersion(), $baseUrl).$endpoint;
+        $url = str_replace('%ver%', $this->getApiVersion(), $baseUrl).$endpoint;
+        $this->assertPathIntegrity($baseUrl, $endpoint, $url);
+
+        return $url;
+    }
+
+    /**
+     * Defence in depth for seg(): confirm that appending the endpoint to the
+     * base URL did not change which path the final URL resolves to.
+     *
+     * @param   string $baseUrl  The %ver%-templated base URL (before substitution).
+     * @param   string $endpoint The endpoint path appended after the base URL.
+     * @param   string $url      The fully built URL.
+     *
+     * @throws  \InvalidArgumentException
+     */
+    protected function assertPathIntegrity(string $baseUrl, string $endpoint, string $url): void
+    {
+        $basePath = parse_url(str_replace('%ver%', $this->getApiVersion(), $baseUrl), PHP_URL_PATH);
+        $actualPath = parse_url($url, PHP_URL_PATH);
+
+        if ($basePath === false || $basePath === null || $actualPath === false || $actualPath === null) {
+            throw new \InvalidArgumentException('Invalid request path');
+        }
+
+        if ($actualPath !== $basePath.$endpoint) {
+            throw new \InvalidArgumentException('Invalid request path');
+        }
+    }
+
+    /**
+     * Validate and encode a caller-supplied id as exactly one URL path segment.
+     *
+     * Rejects empty ids, '.' / '..', and ids that decode (one percent-decode
+     * pass) to a separator, '?', '#', '%', whitespace or a control character,
+     * so a value like '../key/info' or 'x#y' can never add, remove or
+     * replace path segments.
+     *
+     * @param   string $value
+     *
+     * @return  string
+     * @throws  \InvalidArgumentException
+     */
+    private static function seg(string $value): string
+    {
+        if ($value === '') {
+            throw new \InvalidArgumentException('Invalid id');
+        }
+
+        $decoded = rawurldecode($value);
+
+        if ($decoded === '.' || $decoded === '..' || preg_match('/[\/\\\\?#%\s\x00-\x1f]/', $decoded)) {
+            throw new \InvalidArgumentException('Invalid id');
+        }
+
+        return rawurlencode($value);
     }
 
     /**
