@@ -4,6 +4,12 @@ All notable changes to this project are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.1] - 2026-10-21
+
+### Fixed (security)
+
+- **Path parameters are now validated and encoded as a single URL segment.** Every id-taking method (`getTickerByCoinId`, `getHistoricalTickerByCoinId`, `getOHLCV`, `getTokenMeta`, `getCoinTwitter`, `getCoinEvents`, `getCoinExchanges`, `getCoinMarkets`, `getHistoricalOHLCV`, `getTodayOHLCV`, `getPersonById`, `getTagById`, `getExchangeById`, `getExchangeMarkets`, `getContracts`, `getTickerByContract`, `getHistoricalByContract`) previously `sprintf`'d the caller's id straight into the request path without `rawurlencode`. A value such as `'../key/info'` could redirect the request to a different endpoint on the configured host under the operator's key and return that endpoint's response to the caller. Ids are now rejected if empty, `.`/`..`, or if they decode (one percent-decode pass) to a path separator, `?`, `#`, `%`, whitespace or a control character, and are otherwise `rawurlencode`d as exactly one path segment; `getEndpointUrl` additionally verifies the constructed URL's path against the one that was built before the request is sent.
+
 ## [1.5.0] - 2026-04-13
 
 ### ⚠ Breaking changes
