@@ -19,7 +19,7 @@ This library provides convenient way to use [coinpaprika.com API](https://api.co
 
 ## Requirements
 
-* PHP >= 8.0
+* PHP >= 8.1
 * (optional) PHPUnit to run tests.
 
 ## Install
