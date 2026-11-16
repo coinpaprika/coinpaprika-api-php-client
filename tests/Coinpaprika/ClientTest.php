@@ -562,7 +562,7 @@ class ClientTest extends AbstractTestCase
         $this->assertSame(['page' => '3'], $query);
     }
 
-    public function newEndpointsProvider(): array
+    public static function newEndpointsProvider(): array
     {
         return [
             'getCoinTwitter'         => ['getCoinTwitter',         ['btc-bitcoin'],                         '/v1/coins/btc-bitcoin/twitter',         []],
